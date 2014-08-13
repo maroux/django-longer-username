@@ -5,10 +5,14 @@ from django.contrib.auth.models import User
 
 from longerusername.forms import UserCreationForm, UserChangeForm
 
-class LongerUserNameUserAdmin(UserAdmin):
+class LongerUserNameUserAdminMixin(object):
     add_form = UserCreationForm
     form = UserChangeForm
+    
 
 if get_user_model() == User:
+    class LongerUserNameUserAdmin(LongerUserNameUserAdminMixin, UserAdmin):
+        pass
+
     admin.site.unregister(User)
     admin.site.register(User, LongerUserNameUserAdmin)
